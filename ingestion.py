@@ -30,4 +30,5 @@ if __name__ == '__main__':
 
     input_folder_path = config['input_folder_path']
     output_folder_path = config['output_folder_path']
+    Path(output_folder_path).mkdir(exist_ok=True)
     merge_multiple_dataframe(input_folder_path, output_folder_path)
