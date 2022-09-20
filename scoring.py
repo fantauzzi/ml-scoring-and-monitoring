@@ -24,6 +24,7 @@ def score_model(model_file, test_data_file, score_file):
     f1 = f1_score(y, y_pred)
     with open(score_file, 'wt') as f:
         f.write(str(f1))
+    return float(f1)
 
 
 def main():

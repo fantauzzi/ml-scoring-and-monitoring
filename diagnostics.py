@@ -16,8 +16,9 @@ def model_predictions(X, model_file):
         model = pickle.load(f)
 
     y_pred = model.predict(X)
+    y_pred_as_list = [int(item) for item in y_pred]
 
-    return list(y_pred)  # return value should be a list containing all predictions
+    return y_pred_as_list  # return value should be a list containing all predictions
 
 
 ##################Function to get summary statistics
