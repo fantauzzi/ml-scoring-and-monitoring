@@ -1,16 +1,13 @@
-import pickle
-from sklearn.model_selection import train_test_split
 import pandas as pd
-import numpy as np
-from sklearn import metrics
 import matplotlib.pyplot as plt
-import seaborn as sns
 import json
 import os
-from sklearn.metrics import plot_confusion_matrix
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from diagnostics import model_predictions
+import logging
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(message)s')
+logger = logging.getLogger()
 
 ##############Function for reporting
 def score_model(X, output_model_path):
@@ -18,12 +15,14 @@ def score_model(X, output_model_path):
     # write the confusion matrix to the workspace
     y_test = X['exited']
     X_test = X.drop(['exited'], axis=1)
-    y_pred = model_predictions(X_test, f'{output_model_path}/trainedmodel.pkl')
+    model_filename = f'{output_model_path}/trainedmodel.pkl'
+    y_pred = model_predictions(X_test, model_filename)
     cm = confusion_matrix(y_test, y_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
-    plt.savefig(f'{output_model_path}/confusionmatrix.png')
-    # plt.show()
+    output_filename = f'{output_model_path}/confusionmatrix.png'
+    plt.savefig(output_filename)
+    logging.info(f'Saved confusion matrix for model {model_filename} into file {output_filename}')
 
 
 if __name__ == '__main__':
@@ -34,6 +33,8 @@ if __name__ == '__main__':
     output_folder_path = os.path.join(config['output_folder_path'])
     output_model_path = os.path.join(config['output_model_path'])
 
-    df_test = pd.read_csv(f'{test_data_path}/testdata.csv')
+    test_data_filename = f'{test_data_path}/testdata.csv'
+    df_test = pd.read_csv(test_data_filename)
     X_test = df_test.drop(['corporation'], axis=1)
+    logging.info(f'Preparing the confusion matrix based on test set {test_data_filename}')
     score_model(X_test, output_model_path)

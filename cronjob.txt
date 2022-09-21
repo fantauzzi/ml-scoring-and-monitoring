@@ -1,0 +1,1 @@
+*/10 * * * * python /home/fanta/workspace/ml-scoring-and-monitoring/fullprocess.py

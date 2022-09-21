@@ -1,5 +1,4 @@
 import subprocess
-
 import pandas as pd
 import timeit
 import os
@@ -20,6 +19,9 @@ def model_predictions(X, model_file):
     y_pred = model.predict(X)
     y_pred_as_list = [int(item) for item in y_pred]
 
+    logging.info(
+        f'Obtained {len(y_pred_as_list)} prediction(s) for batch of {len(X)} sample(s) with model {model_file}.')
+
     return y_pred_as_list  # return value should be a list containing all predictions
 
 
@@ -35,6 +37,7 @@ def dataframe_summary(df):
         for col, item in s.items():
             res_list.append(f'{row}({col})={item}')
 
+    logging.info(f'Dataset summary: {res_list}')
     # calculate summary statistics here
     return res_list  # return value should be a list containing all summary statistics
 
@@ -46,6 +49,7 @@ def count_na_percentage(df):
     count = nas.sum(axis=0).to_numpy()
     percentage = 100. * count / len(df)
     percentage = [float(item) for item in percentage]
+    logging.info(f'NA percentage by variable (column): {percentage}')
     return percentage
 
 
@@ -83,20 +87,15 @@ if __name__ == '__main__':
     df_test = pd.read_csv(f'{test_data_path}/testdata.csv')
     X_test = df_test.drop(['exited', 'corporation'], axis=1)
     y_pred = model_predictions(X_test, f'{output_model_path}/trainedmodel.pkl')
-    logging.info(f'Obtained {len(y_pred)} prediciton(s) from batch of {len(X_test)} sample(s).')
 
-    df = pd.read_csv(f'{output_folder_path}/finaldata.csv')
+    final_data_filename = f'{output_folder_path}/finaldata.csv'
+    df = pd.read_csv(final_data_filename)
     X = df.drop(['corporation'], axis=1)
+    logging.info(f'Making summary for dataset {final_data_filename}')
     summary = dataframe_summary(X)
-    logging.info(f'Dataset summary: {summary}')
-
     na_percentage = count_na_percentage(X)
-    logging.info(f'NA percentage by variable (column): {na_percentage}')
-
-    input_folder_path = config['input_folder_path']
     exec_times = execution_time()
     logging.info(f'Execution time for ingestion: {exec_times[0]}s   Execution time for training: {exec_times[1]}s')
     print('\nOutdated python packages')
     report = outdated_packages_list()
     print(report)
-    # print(report.decode('ascii'))

@@ -1,13 +1,12 @@
-from flask import Flask, session, jsonify, request
 import pandas as pd
-import numpy as np
 import pickle
 import os
-from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 import json
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(message)s')
+logger = logging.getLogger()
 
 
 #################Function for model scoring
@@ -22,8 +21,11 @@ def score_model(model_file, test_data_file, score_file):
 
     y_pred = model.predict(X)
     f1 = f1_score(y, y_pred)
+    logging.info(f'Scored model from file {model_file} over test dataset {test_data_file} - F1={f1}')
     with open(score_file, 'wt') as f:
         f.write(str(f1))
+        logging.info(f'Saved F1 score into file {score_file}')
+
     return float(f1)
 
 

@@ -4,11 +4,17 @@ import os
 from sklearn.linear_model import LogisticRegression
 import json
 from pathlib import Path
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(message)s')
+logger = logging.getLogger()
 
 
 #################Function for training the model
 def train_model(dataset_csv_path, model_path):
-    df = pd.read_csv(f'{dataset_csv_path}/finaldata.csv')
+    dataset_filename = f'{dataset_csv_path}/finaldata.csv'
+    logger.info(f'Training with dataset {dataset_filename}')
+    df = pd.read_csv(dataset_filename)
     df.drop(['corporation'], axis=1, inplace=True)
     y = df['exited']
     X = df.drop(['exited'], axis=1, inplace=False)
@@ -24,8 +30,9 @@ def train_model(dataset_csv_path, model_path):
     model.fit(X, y)
 
     # write the trained model to your workspace in a file called trainedmodel.pkl
-
-    with open(f'{model_path}/trainedmodel.pkl', 'wb') as f:
+    pickled_filename = f'{model_path}/trainedmodel.pkl'
+    logging.info(f'Saving trained model into {pickled_filename}')
+    with open(pickled_filename, 'wb') as f:
         pickle.dump(model, f, pickle.HIGHEST_PROTOCOL)
 
 

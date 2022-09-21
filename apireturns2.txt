@@ -3,31 +3,31 @@ Predictions ====================================
   0, 
   1, 
   1, 
-  1, 
+  0, 
   1
 ]
 
 Scoring ========================================
-0.5714285714285715
+0.3333333333333333
 Summary stats ==================================
 [
-  "mean(lastmonth_activity)=165.65384615384616", 
-  "mean(lastyear_activity)=1502.923076923077", 
-  "mean(number_of_employees)=26.884615384615383", 
-  "mean(exited)=0.5769230769230769", 
-  "median(lastmonth_activity)=73.0", 
-  "median(lastyear_activity)=955.0", 
-  "median(number_of_employees)=14.0", 
-  "median(exited)=1.0", 
-  "std(lastmonth_activity)=284.0332293669446", 
-  "std(lastyear_activity)=2192.64495845683", 
-  "std(number_of_employees)=31.353885785435807", 
-  "std(exited)=0.5038314736557788"
+  "mean(lastmonth_activity)=5625.923076923077", 
+  "mean(lastyear_activity)=763.5384615384615", 
+  "mean(number_of_employees)=457.46153846153845", 
+  "mean(exited)=0.5", 
+  "median(lastmonth_activity)=425.0", 
+  "median(lastyear_activity)=97.5", 
+  "median(number_of_employees)=99.0", 
+  "median(exited)=0.5", 
+  "std(lastmonth_activity)=19444.774621317832", 
+  "std(lastyear_activity)=2016.6093569309696", 
+  "std(number_of_employees)=800.6048328991891", 
+  "std(exited)=0.5099019513592785"
 ]
 
 Diagnostics ====================================
 {
-  "ingestion_time": 0.19810787200003688, 
+  "ingestion_time": 0.20061810200058972, 
   "na_percentages": [
     0.0, 
     0.0, 
@@ -35,6 +35,6 @@ Diagnostics ====================================
     0.0
   ], 
   "outdated_packages_report": "Package            Version   Latest    Type\n------------------ --------- --------- -----\nasttokens          2.0.5     2.0.8     wheel\ncertifi            2022.6.15 2022.9.14 wheel\ncharset-normalizer 2.0.4     2.1.1     wheel\nclick              8.0.4     8.1.3     wheel\ncryptography       37.0.1    38.0.1    wheel\nexecuting          0.8.3     1.0.0     wheel\nFlask              2.1.3     2.2.2     wheel\nfonttools          4.25.0    4.37.3    wheel\nidna               3.3       3.4       wheel\nipython            8.4.0     8.5.0     wheel\nitsdangerous       2.0.1     2.1.2     wheel\nJinja2             3.0.3     3.1.2     wheel\njoblib             1.1.0     1.2.0     wheel\nkiwisolver         1.4.2     1.4.4     wheel\nmatplotlib         3.5.2     3.6.0     wheel\nnumpy              1.21.5    1.23.3    wheel\npandas             1.4.3     1.5.0     wheel\npip                22.1.2    22.2.2    wheel\nprompt-toolkit     3.0.20    3.0.31    wheel\nPygments           2.11.2    2.13.0    wheel\npytz               2022.1    2022.2.1  wheel\nscikit-learn       1.1.1     1.1.2     wheel\nscipy              1.7.3     1.9.1     wheel\nseaborn            0.11.2    0.12.0    wheel\nsetuptools         63.4.1    65.3.0    wheel\nstack-data         0.2.0     0.5.0     wheel\nthreadpoolctl      2.2.0     3.1.0     wheel\ntraitlets          5.1.1     5.4.0     wheel\nurllib3            1.26.11   1.26.12   wheel\nWerkzeug           2.0.3     2.2.2     wheel\n", 
-  "training_time": 0.4710789549990295
+  "training_time": 0.46150658399892563
 }
 
