@@ -23,15 +23,18 @@ response2 = requests.get(f'{URL}/scoring').text
 print(response2)
 response3 = requests.get(f'{URL}/summarystats').text
 print(response3)
+response4 = requests.get(f'{URL}/diagnostics').text
+print(response4)
 
-"""response2 = #put an API call here
-response3 = #put an API call here
-response4 = #put an API call here
-
-#combine all API responses
-responses = #combine reponses here
-
-#write the responses to your workspace
-"""
+api_returns_filename = 'apireturns.txt'
+with open(api_returns_filename, 'wt') as f:
+    f.write('Predictions ====================================\n')
+    f.write(f'{response1}\n')
+    f.write('Scoring ========================================\n')
+    f.write(f'{response2}\n')
+    f.write('Summary stats ==================================\n')
+    f.write(f'{response3}\n')
+    f.write('Diagnostics ====================================\n')
+    f.write(f'{response4}\n')
 
 

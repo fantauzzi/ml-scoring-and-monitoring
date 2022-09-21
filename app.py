@@ -4,7 +4,8 @@ import numpy as np
 import pickle
 import json
 import os
-from diagnostics import model_predictions, dataframe_summary
+from diagnostics import model_predictions, dataframe_summary, count_na_percentage, execution_time, \
+    outdated_packages_list
 from scoring import score_model
 
 ######################Set up variables for use in our script
@@ -23,7 +24,7 @@ prod_deployment_path = os.path.join(config['prod_deployment_path'])
 trained_model_file = f'{output_model_path}/trainedmodel.pkl'
 latest_score_file = f'{output_model_path}/latestscore.txt'
 test_data_file = f'{test_data_path}/testdata.csv'
-final_data_file =f'{output_folder_path}/finaldata.csv'
+final_data_file = f'{output_folder_path}/finaldata.csv'
 
 
 # prediction_model = None
@@ -61,14 +62,24 @@ def stats():
     df = pd.read_csv(final_data_file)
     X = df.drop(['corporation'], axis=1)
     summary = dataframe_summary(X)
-    return  jsonify(summary)# return a list of all calculated summary statistics
+    return jsonify(summary)  # return a list of all calculated summary statistics
 
 
 #######################Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET', 'OPTIONS'])
 def diagnose():
+    df = pd.read_csv(test_data_file)
+    X = df.drop(['corporation'], axis=1)
+    na_percentages = count_na_percentage(X)
+    ingestion_time, training_time = execution_time()
+    outdated_report = outdated_packages_list()
+    res = {'na_percentages': na_percentages,
+           'ingestion_time': ingestion_time,
+           'training_time': training_time,
+           'outdated_packages_report': outdated_report}
+
     # check timing and percent NA values
-    return  # add return value for all diagnostics
+    return jsonify(res)  # add return value for all diagnostics
 
 
 if __name__ == "__main__":

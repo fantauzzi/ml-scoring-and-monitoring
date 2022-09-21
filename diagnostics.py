@@ -1,3 +1,5 @@
+import subprocess
+
 import pandas as pd
 import timeit
 import os
@@ -43,7 +45,8 @@ def count_na_percentage(df):
     nas = df.isna()
     count = nas.sum(axis=0).to_numpy()
     percentage = 100. * count / len(df)
-    return list(percentage)
+    percentage = [float(item) for item in percentage]
+    return percentage
 
 
 ##################Function to get timings
@@ -64,7 +67,8 @@ def execution_time():
 ##################Function to check dependencies
 def outdated_packages_list():
     # get a list of outdated packages
-    os.system('pip list --outdated')
+    outdated_report = subprocess.check_output(['pip', 'list', '--outdated'])
+    return outdated_report.decode('ascii')
 
 
 if __name__ == '__main__':
@@ -93,4 +97,6 @@ if __name__ == '__main__':
     exec_times = execution_time()
     logging.info(f'Execution time for ingestion: {exec_times[0]}s   Execution time for training: {exec_times[1]}s')
     print('\nOutdated python packages')
-    outdated_packages_list()
+    report = outdated_packages_list()
+    print(report)
+    # print(report.decode('ascii'))
